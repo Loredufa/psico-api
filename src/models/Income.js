@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = function(sequelize) {
   // defino el modelo
-  return sequelize.define('bill', {
+  return sequelize.define('income', {
     id:  {
       type: DataTypes.STRING,
       allowNull: false,
@@ -21,13 +21,18 @@ module.exports = function(sequelize) {
       type: DataTypes.STRING,
       allowNull: true,
     },    
-    mensual: {
+    cobrado: {
       type:DataTypes.STRING,
       allowNull:true,
     },
-    diferido: {
+    facturado: {
       type:DataTypes.STRING,
       allowNull:true,
-    }
+    },
+    cancelado: {
+      type:DataTypes.STRING,
+      allowNull:true,
+    },
+    
   })
   };

@@ -1,6 +1,7 @@
 const {Sequelize} = require('sequelize')
 const {dbUser, dbName, dbPassword, dbHost} = require('../utils/config')
 const Bills = require('./Bill')
+const Incomes = require('./Income')
 
 
 const sequelize = new Sequelize(`postgres://${dbUser}:${dbPassword}@${dbHost}/${dbName}`, {
@@ -13,6 +14,7 @@ const sequelize = new Sequelize(`postgres://${dbUser}:${dbPassword}@${dbHost}/${
 });
 
 const Bill = Bills(sequelize)
+const Income = Incomes(sequelize)
 
 
 
@@ -28,5 +30,6 @@ const Bill = Bills(sequelize)
 module.exports = {
     conn: sequelize,
     Bill,
+    Income,
     sequelize
 }
