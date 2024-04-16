@@ -1,4 +1,5 @@
 const { Bill, Income} = require('../models/index')
+//Total cobrado al mes
 
 
 const getTotalBillsForMonth = async (req, res) => {
@@ -165,24 +166,151 @@ const getIncomesbyNamexMouth = async (req, res) => {
   }
 }
 
-const deleteB = async (req, res, next) => {
+const getCurrentBillsMonth = async (req, res) => {
   try {
-  const id = req.params.id
-  const deleteInfo = await Detail_bill.destroy({
-    where: {
-      id,
-    },
-  })
-  deleteInfo? res.status(200).send({message:'Gasto eliminado'}) :
-  res.status(401).send({message:'No se pudo eliminar el gasto'}) 
+      const infoBills = await Bill.findAll();
+
+      // Obtener la fecha actual
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1; // Los meses van de 0 a 11
+
+      // Filtrar solo las facturas del mes actual
+      const billsForCurrentMonth = infoBills.filter(bill => {
+          const [day, month, year] = bill.fecha.split('/');
+          return parseInt(month) === currentMonth;
+      });
+
+      // Calcular el total de las facturas del mes actual
+      const totalForCurrentMonth = billsForCurrentMonth.reduce((acc, bill) => {
+          return acc + parseFloat(bill.monto);
+      }, 0);
+
+      // Construir el objeto de respuesta
+      const response = {
+          month: currentMonth.toString(), // Convertir a cadena
+          year: currentDate.getFullYear().toString(), // Convertir a cadena
+          total: totalForCurrentMonth
+      };
+
+      // Enviar la respuesta
+      res.status(200).send(response);
+  } catch (error) {
+      console.log("Algo salió mal: ", error);
+      res.status(500).send({ message: 'Ocurrió un error en el servidor' });
   }
-  catch (error) { console.log("Algo salio mal: ", error); 
-}
-}
+};
+
+const getCurrentIncomesMonth = async (req, res) => {
+  try {
+      const infoIncomes = await Income.findAll();
+
+      // Obtener la fecha actual
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1; // Los meses van de 0 a 11
+
+      // Filtrar solo las facturas del mes actual
+      const incomesForCurrentMonth = infoIncomes.filter(e => {
+          const [day, month, year] = e.fecha.split('/');
+          return parseInt(month) === currentMonth;
+      });
+
+      // Calcular el total de las facturas del mes actual
+      const totalForCurrentMonth = incomesForCurrentMonth.reduce((acc, inc) => {
+          return acc + parseFloat(inc.monto);
+      }, 0);
+
+      // Construir el objeto de respuesta
+      const response = {
+          month: currentMonth.toString(), // Convertir a cadena
+          year: currentDate.getFullYear().toString(), // Convertir a cadena
+          total: totalForCurrentMonth
+      };
+
+      // Enviar la respuesta
+      res.status(200).send(response);
+  } catch (error) {
+      console.log("Algo salió mal: ", error);
+      res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+  }
+};
+
+const getCurrentDeferidoBills = async (req, res) => {
+  try {
+    const infoBills = await Bill.findAll();
+
+    // Obtener la fecha actual
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Los meses van de 0 a 11
+
+    // Filtrar solo los gastos del mes actual y que tengan la propiedad diferido en true
+    const billsForCurrentMonth = infoBills.filter(bill => {
+      const [day, month, year] = bill.fecha.split('/');
+      return parseInt(month) === currentMonth && bill.diferido === 'true';
+    });
+
+    // Calcular el total de los gastos del mes actual
+    const totalForCurrentMonth = billsForCurrentMonth.reduce((acc, bill) => {
+      return acc + parseFloat(bill.monto);
+    }, 0);
+
+    // Construir el objeto de respuesta
+    const response = {
+      month: currentMonth.toString(), // Convertir a cadena
+      year: currentDate.getFullYear().toString(), // Convertir a cadena
+      total: totalForCurrentMonth
+    };
+
+    // Enviar la respuesta
+    res.status(200).send(response);
+  } catch (error) {
+    console.log("Algo salió mal: ", error);
+    res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+  }
+};
+
+const getCurrentPendingIncome = async (req, res) => {
+  try {
+    const info = await Income.findAll();
+
+    // Obtener la fecha actual
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Los meses van de 0 a 11
+
+    // Filtrar solo los gastos del mes actual y que tengan la propiedad diferido en true
+    const IncomesForCurrentMonth = info.filter(income => {
+      const [day, month, year] = income.fecha.split('/');
+      return parseInt(month) === currentMonth && income.cobrado === 'false';
+    });
+
+    // Calcular el total de los gastos del mes actual
+    const totalForCurrentMonth = IncomesForCurrentMonth.reduce((acc, income) => {
+      return acc + parseFloat(income.monto);
+    }, 0);
+
+    // Construir el objeto de respuesta
+    const response = {
+      month: currentMonth.toString(), // Convertir a cadena
+      year: currentDate.getFullYear().toString(), // Convertir a cadena
+      total: totalForCurrentMonth
+    };
+
+    // Enviar la respuesta
+    res.status(200).send(response);
+  } catch (error) {
+    console.log("Algo salió mal: ", error);
+    res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+  }
+};
+
+
 
 module.exports = {
     getTotalBillsForMonth,
     getTotalIncomesForMonth,
     getBillsbyNamexMouth,
-    getIncomesbyNamexMouth
+    getIncomesbyNamexMouth,
+    getCurrentBillsMonth,
+    getCurrentIncomesMonth,
+    getCurrentDeferidoBills,
+    getCurrentPendingIncome
 }

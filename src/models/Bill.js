@@ -28,6 +28,10 @@ module.exports = function(sequelize) {
     diferido: {
       type:DataTypes.STRING,
       allowNull:true,
+    },
+    fecha_dif: {
+      type:DataTypes.STRING,
+      allowNull:true,
     }
   })
   };
