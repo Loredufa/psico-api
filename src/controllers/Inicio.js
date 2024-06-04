@@ -21,14 +21,22 @@ const getBillsById = async (req, res) => {
   }
 }
 
-const addBill = async (req,res) => {
+const addBill = async (info) => {
   try {
-    const info = req.body
-    const newInfo = await Bill.create(info)
-    newInfo? res.status(200).send({ message: 'Gasto agregado correctamente' }) : res.status(400).send({ message: 'No se pudo guardar el gasto' })
-  } catch (error) { console.log("Algo salio mal: ", error); 
-}
-}
+    const newInfo = await Bill.create(info);
+    if (newInfo) {
+      return {
+        message: 'Gasto agregado correctamente',
+        bill: newInfo
+      };
+    } else {
+      throw new Error('No se pudo guardar el gasto');
+    }
+  } catch (error) {
+    console.log("Algo salió mal: ", error);
+    throw new Error('Error al guardar el gasto');
+  }
+};
 
 const putBill= async (req, res) => {
   try {

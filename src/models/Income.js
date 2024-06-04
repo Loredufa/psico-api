@@ -4,10 +4,11 @@ const { DataTypes } = require('sequelize');
 module.exports = function(sequelize) {
   // defino el modelo
   return sequelize.define('income', {
-    id:  {
-      type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false
     },
     fecha: {
       type: DataTypes.STRING,
