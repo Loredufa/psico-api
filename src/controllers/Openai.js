@@ -6,7 +6,7 @@ const formatDateToDDMMYYYY = (date) => {
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript son 0-indexados.
   const year = date.getFullYear();
-  return `${day}-${month}-${year}`;
+  return `${day}/${month}/${year}`;
 };
 
 const gpt_bill_income = async (req, res) => {
@@ -39,7 +39,7 @@ const gpt_bill_income = async (req, res) => {
         fecha: formattedDate,
         descripcion: data.descripcion,
         monto: data.monto,
-        cobrado: data.cobrado
+        mensual: data.mensual
       };
       const incomeAdd = await addIncome(income);
       res.status(200).json(incomeAdd);

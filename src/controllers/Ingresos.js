@@ -38,6 +38,16 @@ const addIncome = async (info) => {
   }
 };
 
+const addIncomeForm= async (req, res) => {
+  try {
+    const info = req.body
+    const createInfo = await Income.create(info)
+    createInfo? res.status(200).send({message:'Ingreso creado correctamente'}) : 
+    res.status(401).send({message:'No se pudo crear el ingreso'});
+  } catch (error) { console.log("Algo salio mal: ", error); 
+}
+}
+
 const putIncome= async (req, res) => {
   try {
     const id = req.params.id
@@ -73,5 +83,6 @@ module.exports = {
     getIncomeById,
     addIncome,
     putIncome,
-    deleteIncome
+    deleteIncome,
+    addIncomeForm
 }

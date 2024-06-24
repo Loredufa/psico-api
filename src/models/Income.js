@@ -22,18 +22,13 @@ module.exports = function(sequelize) {
       type: DataTypes.STRING,
       allowNull: true,
     },    
-    cobrado: {
+    mensual: {
       type:DataTypes.STRING,
       allowNull:true,
     },
     facturado: {
       type:DataTypes.STRING,
       allowNull:true,
-    },
-    cancelado: {
-      type:DataTypes.STRING,
-      allowNull:true,
-    },
-    
+    },   
   })
   };

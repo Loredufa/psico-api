@@ -38,6 +38,16 @@ const addBill = async (info) => {
   }
 };
 
+const addBillForm= async (req, res) => {
+  try {
+    const info = req.body
+    const createInfo = await Bill.create(info)
+    createInfo? res.status(200).send({message:'Gasto creado correctamente'}) : 
+    res.status(401).send({message:'No se crear el gasto'});
+  } catch (error) { console.log("Algo salio mal: ", error); 
+}
+}
+
 const putBill= async (req, res) => {
   try {
     const id = req.params.id
@@ -73,5 +83,6 @@ module.exports = {
   putBill,
   addBill,
   getBillsById,
-  getAllBills
+  getAllBills,
+  addBillForm
 }

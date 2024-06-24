@@ -31,7 +31,7 @@ Si es un ingreso, el objeto JSON debe ser:
   "type": "income", 
   "descripcion": "dato que refiere a qué generó el ingreso, por ejemplo, 'ingreso de Javier Acosta' la descripción debería ser 'Javier Acosta', 'ingreso venta de auto' la descripción debería ser 'venta de auto'", 
   "monto": "el monto del ingreso, intenta entender el número expresado en letras y pasarlo a números", 
-  "cobrado": "completar con un booleano solo si el texto especifica que está cobrado"
+  "mensual": "completar con un booleano solo si el texto especifica que es un gasto mensual o sea que se realiza todos los meses"
 }
 
 Texto: "${text}"
