@@ -9,7 +9,6 @@ FROM registry.access.redhat.com/ubi9/nodejs-16
 USER root
 
 COPY package.json package-lock.json* ./
-COPY .env .
 
 RUN npm install
 
