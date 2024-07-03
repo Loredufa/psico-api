@@ -45,6 +45,11 @@ const gpt_bill_income = async (req, res) => {
       res.status(200).json(incomeAdd);
       return;
     }
+    if (data.type === 'otro') {
+      const response = data.Respuesta || 'No se pudo procesar el texto.';
+      res.status(200).json({ message: response });
+      return;
+    }
 
     res.json(data);
   } catch (error) {

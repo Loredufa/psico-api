@@ -23,7 +23,7 @@ Si es un gasto, el objeto JSON debe ser:
   "descripcion": "donde se realizó el gasto, por ejemplo, si el texto dice 'gasto en el kiosco por cinco mil' la descripción debería ser 'kiosco', si dice 'gasto en la tienda de ropa por tres mil' la descripción debería ser 'tienda de ropa', si dice 'gasto en papelería por x monto', la descripción debería ser 'papelería'", 
   "monto": "el monto del gasto, expresado en numeros pero sin el signo de pesos", 
   "mensual": "si el texto se refiere a un gasto mensual colocar true", 
-  "diferido": "si el texto menciona la palabra 'diferido' colocar true", 
+  "diferido": "si el texto menciona la palabra 'diferido' o se refiere a un pago realizado con tarjeta de credito colocar true", 
   "fecha_dif": "solo si en diferido se colocó true y luego de la palabra diferido el texto menciona una fecha, debe colocarse aquí con formato DD-MM-AAAA, si no se especifica el año colocar el año en curso"
 }
 Si es un ingreso, el objeto JSON debe ser:
@@ -32,6 +32,11 @@ Si es un ingreso, el objeto JSON debe ser:
   "descripcion": "dato que refiere a qué generó el ingreso, por ejemplo, 'ingreso de Javier Acosta' la descripción debería ser 'Javier Acosta', 'ingreso venta de auto' la descripción debería ser 'venta de auto'", 
   "monto": "el monto del ingreso, intenta entender el número expresado en letras y pasarlo a números", 
   "mensual": "completar con un booleano solo si el texto especifica que es un gasto mensual o sea que se realiza todos los meses"
+}
+Si nose refiere a ninguno de los anteriores o no contiene un valor en numero o dinero, el objeto Jsondebe ser:
+{
+"type": "otro",
+"Respuesta": "Agrega tu respuesta aqui, podria ser "No puedo reconocer el gasto o ingreso" o algun mensaje menor formal que te parezca conveniente, si puedes agrega unas palablas positivas o algo de humor."
 }
 
 Texto: "${text}"
